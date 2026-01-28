@@ -1,0 +1,284 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body{
+  background:#f4f6fb;
+  color:#222;
+}
+
+.app{
+  max-width:1300px;
+  margin:auto;
+  padding:20px;
+}
+
+/* Topbar */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.topbar .left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.icon-btn{
+  border:none;
+  background:#fff;
+  border-radius:8px;
+  padding:8px;
+  cursor:pointer;
+}
+
+.save-btn{
+  background:#ff9f1a;
+  border:none;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  margin-right:10px;
+}
+
+.discard-btn{
+  background:#eee;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+}
+
+/* Layout */
+.dashboard{
+  display:grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap:20px;
+}
+
+.column{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+/* Cards */
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+.label{
+  font-size:13px;
+  color:#666;
+  margin-bottom:10px;
+}
+
+/* Time */
+.time-card{
+  background:linear-gradient(135deg,#6c5ce7,#8e7cff);
+  color:white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.time-card p{
+    color: white;
+    margin-top: 3px;
+}
+.time-card h2{
+    margin-top: -5px;
+}
+
+
+.time-card span{
+  font-size:13px;
+  opacity:.9;
+  font-size: 11px;
+}
+
+/* Today Overview */
+.overview-card{
+  background:#fff;
+}
+
+.overview-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+}
+
+.overview-item:last-child{
+  border-bottom:none;
+}
+
+.overview-item .title{
+  font-size:14px;
+  color:#555;
+}
+
+.overview-item .value{
+  font-size:18px;
+  font-weight:600;
+  color:#333;
+}
+
+.overview-item .value.done{
+  color:#2ecc71;
+}
+
+.overview-item .value.pending{
+  color:#e67e22;
+}
+
+/* Assignments */
+.assignment-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:8px;
+  font-size:14px;
+}
+
+.assignment-item small{
+  font-size:12px;
+}
+
+/* status colors */
+.assignment-item.urgent{
+  background:#ffeaea;
+  color:#c0392b;
+}
+
+.assignment-item.warning{
+  background:#fff3d6;
+  color:#d35400;
+}
+
+.assignment-item.normal{
+  background:#eef4ff;
+  color:#2c5fd5;
+}
+
+
+/* Timer */
+.timer-card{
+  text-align:center;
+}
+
+.timer-tabs{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.timer-tabs button{
+  padding:6px 14px;
+  border:none;
+  border-radius:20px;
+  background:#eee;
+}
+
+.timer-tabs .active{
+  background:#6c5ce7;
+  color:white;
+}
+
+.timer-circle{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  border:8px solid #6c5ce7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  font-weight:bold;
+  margin:20px auto;
+}
+
+.timer-actions{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+.timer-actions button{
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+}
+
+.primary{
+  background:#6c5ce7;
+  color:white;
+}
+
+/* Schedule */
+.schedule-item{
+  display:flex;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.schedule-item .time{
+  color:#6c5ce7;
+  font-weight:bold;
+}
+
+/* Rewards */
+.reward-card{
+  text-align:center;
+}
+
+.reward-count{
+  font-size:28px;
+  font-weight:bold;
+  color:#6c5ce7;
+}
+
+.reward-box{
+  border:2px dashed #ddd;
+  padding:20px;
+  border-radius:12px;
+  margin-top:10px;
+}
+
+/* Todo */
+.todo-list{
+  list-style:none;
+  margin-top:10px;
+}
+
+.todo-list li{
+  padding:10px;
+  border-radius:8px;
+  background:#f5f6fa;
+  margin-bottom:8px;
+}
+
+.todo-list .done{
+  text-decoration:line-through;
+  color:#888;
+}
+
+.todo-list .active{
+  border-left:4px solid #6c5ce7;
+}
+
+.small{
+  font-size:13px;
+  color:#666;
+}
