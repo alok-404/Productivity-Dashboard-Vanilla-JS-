@@ -257,28 +257,135 @@ body{
 }
 
 /* Todo */
-.todo-list{
-  list-style:none;
-  margin-top:10px;
+.todo-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
 
-.todo-list li{
-  padding:10px;
-  border-radius:8px;
-  background:#f5f6fa;
-  margin-bottom:8px;
+/* Header */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
-.todo-list .done{
-  text-decoration:line-through;
-  color:#888;
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
 }
 
-.todo-list .active{
-  border-left:4px solid #6c5ce7;
+/* Input */
+.todoInput {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
-.small{
-  font-size:13px;
-  color:#666;
+.todoInput input {
+  flex: 1;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: #111;
+  outline: none;
+}
+
+.todoInput input::placeholder {
+  color: #9ca3af;
+}
+
+.todoInput button {
+  background: #4f46e5;
+  border: none;
+  border-radius: 10px;
+  width: 40px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+.todoInput button:active{
+scale: 0.9;
+}
+
+/* List */
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-list li {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+
+.todo-list li:hover {
+  background: #f3f4f6;
+}
+
+/* Checkbox + text */
+.todo-list label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.todo-list input[type="checkbox"] {
+  accent-color: #4f46e5;
+  width: 16px;
+  height: 16px;
+}
+
+.todo-list span {
+  font-size: 14px;
+  color: #111;
+}
+
+/* Done task */
+.todo-list li.done span {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+/* Delete */
+.delete {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.delete:hover {
+  opacity: 1;
+}
+
+/* Footer */
+.small {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 10px;
+}
+
+
+.error-text {
+  font-size: 12px;
+  color: #ef4444;
+  margin-top: 6px;
+  display: none; 
 }

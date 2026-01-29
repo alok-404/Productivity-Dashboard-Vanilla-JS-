@@ -143,15 +143,49 @@
       </div>
 
       <!-- To-do -->
-      <div class="card">
-        <p class="label">To-Do List</p>
-        <ul class="todo-list">
-          <li class="done">Resume Update</li>
-          <li class="active">React Practice</li>
-          <li>Assignment Submission</li>
-        </ul>
-        <p class="small">2 of 3 tasks remaining</p>
-      </div>
+  <div class="card todo-card">
+  <div class="card-header">
+    <img width="20" height="20"
+      src="https://img.icons8.com/external-flat-design-circle/64/external-Todo-List-business-flat-design-circle.png" />
+    <p class="label">To-Do List</p>
+  </div>
+
+  <div class="todoInput">
+    <input type="text" placeholder="Add new task..." />
+    <button>+</button>
+  </div>
+
+<p class="error-text">Todo cannot be empty</p>
+
+
+  <ul class="todo-list">
+    <li class="done">
+      <label>
+        <input type="checkbox" checked />
+        <span>Resume Update</span>
+      </label>
+      <button class="delete">✕</button>
+    </li>
+
+    <li class="active">
+      <label>
+        <input type="checkbox" />
+        <span>React Practice</span>
+      </label>
+      <button class="delete">✕</button>
+    </li>
+
+    <li>
+      <label>
+        <input type="checkbox" />
+        <span>Assignment Submission</span>
+      </label>
+      <button class="delete">✕</button>
+    </li>
+  </ul>
+  <p class="small">2 of 3 tasks remaining</p>
+</div>
+
 
     </div>
 
