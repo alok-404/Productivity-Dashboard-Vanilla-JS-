@@ -88,4 +88,5 @@ Built to strengthen JavaScript fundamentals — not just to complete another pro
 
 📄 License
 
-This project is open-source and available for learning and personal use.
+This project is open-source and available for learning and personal use.# Productivity Dashboard – Vanilla JavaScript
+

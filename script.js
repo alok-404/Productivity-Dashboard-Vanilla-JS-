@@ -56,127 +56,203 @@ setInterval(updateTime, 1000);
 
 //to-do list section
 
-let todoInput = document.querySelector(".todoInput input");
-let todoInputAddBtn = document.querySelector(".todoInput button");
-let errorText = document.querySelector(".error-text");
-let todoList = document.querySelector(".todo-list");
-let remainingTask = document.querySelector(".todo-card .small");
-let rewardCount = document.querySelector(".reward-count");
-let overviewTotalTask = document.querySelector("#total");
-let overviewTotalTaskCompleted = document.querySelector("#done");
-let overviewTotalTaskRemaining = document.querySelector("#pending");
+function todoConcept() {
+  let todoInput = document.querySelector(".todoInput input");
+  let todoInputAddBtn = document.querySelector(".todoInput button");
+  let errorText = document.querySelector(".error-text");
+  let todoList = document.querySelector(".todo-list");
+  let remainingTask = document.querySelector(".todo-card .small");
+  let rewardCount = document.querySelector(".reward-count");
+  let overviewTotalTask = document.querySelector("#total");
+  let overviewTotalTaskCompleted = document.querySelector("#done");
+  let overviewTotalTaskRemaining = document.querySelector("#pending");
 
+  let allTodos = JSON.parse(localStorage.getItem("PDtodos")) || [];
 
+  //to render all todos
+  renderTodos(allTodos);
 
-
-
-let allTodos = JSON.parse(localStorage.getItem("PDtodos")) || [];
-
-//to render all todos
-renderTodos(allTodos);
-
-//set Items im local storage
-function LocalStorageSetItems() {
-  localStorage.setItem("PDtodos", JSON.stringify(allTodos));
-}
-
-todoInputAddBtn.addEventListener("click", function () {
-  let newTodo = todoInput.value.trim();
-  // console.log(newTodo);
-  if (newTodo === "") {
-    errorText.style.display = "block";
-    return;
+  //set Items im local storage
+  function LocalStorageSetItems() {
+    localStorage.setItem("PDtodos", JSON.stringify(allTodos));
   }
 
-  errorText.style.display = "none";
-
-  let todoObj = {
-    text: newTodo,
-    id: Date.now(),
-    isCompleted: false,
-  };
-  // console.log(todoObj);
-
-  allTodos.push(todoObj);
-  LocalStorageSetItems();
-
-  createTodoElements(todoObj);
-  renderTodos();
-
-  todoInput.value = "";
-});
-function renderTodos() {
-  todoList.innerHTML = "";
-
-  allTodos.forEach((todo) => {
-    const li = createTodoElements(todo);
-    todoList.appendChild(li);
-  });
-
-  updateTaskCounter();
-}
-
-function updateTaskCounter() {
-  const remaining = allTodos.filter((t) => !t.isCompleted).length;
-  const total = allTodos.length;
-  const completedTask = allTodos.filter((t)=> t.isCompleted).length;
-  console.log(completedTask);
-  
-  remainingTask.textContent = `${remaining} of ${total} tasks remaining`;
-  rewardCount.textContent = `${completedTask}`;
-  overviewTotalTask.textContent = `${total}`;
-  overviewTotalTaskCompleted.textContent = `${completedTask}`;
-  overviewTotalTaskRemaining.textContent = `${remaining}`;
-}
-
-function createTodoElements(todoObj) {
-  const li = document.createElement("li");
-  li.dataset.id = todoObj.id;
-
-  if (todoObj.isCompleted) li.classList.add("done");
-
-  const label = document.createElement("label");
-
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.checked = todoObj.isCompleted;
-
-  const span = document.createElement("span");
-  span.innerText = todoObj.text;
-
-  label.appendChild(checkbox);
-  label.appendChild(span);
-
-  const deleteBtn = document.createElement("button");
-  deleteBtn.className = "delete";
-  deleteBtn.innerText = "✕";
-
-  li.appendChild(label);
-  li.appendChild(deleteBtn);
-  // todoList.appendChild(li)
-
-  deleteBtn.addEventListener("click", function () {
-    allTodos = allTodos.filter((t) => t.id !== todoObj.id);
-    LocalStorageSetItems();
-    renderTodos(allTodos);
-  updateTaskCounter();
-
-  });
-
-  checkbox.addEventListener("click", function () {
-    let targetedTodo = allTodos.find((t) => t.id === todoObj.id);
-    if (targetedTodo) {
-      targetedTodo.isCompleted = checkbox.checked;
-      li.classList.add("done");
+  todoInputAddBtn.addEventListener("click", function () {
+    let newTodo = todoInput.value.trim();
+    // console.log(newTodo);
+    if (newTodo === "") {
+      errorText.style.display = "block";
+      return;
     }
-    li.classList.add("active");
+
+    errorText.style.display = "none";
+
+    let todoObj = {
+      text: newTodo,
+      id: Date.now(),
+      isCompleted: false,
+    };
+    // console.log(todoObj);
+
+    allTodos.push(todoObj);
     LocalStorageSetItems();
+
+    createTodoElements(todoObj);
     renderTodos();
 
-  updateTaskCounter();
-
+    todoInput.value = "";
   });
+  function renderTodos() {
+    todoList.innerHTML = "";
 
-  return li;
+    allTodos.forEach((todo) => {
+      const li = createTodoElements(todo);
+      todoList.appendChild(li);
+    });
+
+    updateTaskCounter();
+  }
+
+  function updateTaskCounter() {
+    const remaining = allTodos.filter((t) => !t.isCompleted).length;
+    const total = allTodos.length;
+    const completedTask = allTodos.filter((t) => t.isCompleted).length;
+    console.log(completedTask);
+
+    remainingTask.textContent = `${remaining} of ${total} tasks remaining`;
+    rewardCount.textContent = `${completedTask}`;
+    overviewTotalTask.textContent = `${total}`;
+    overviewTotalTaskCompleted.textContent = `${completedTask}`;
+    overviewTotalTaskRemaining.textContent = `${remaining}`;
+  }
+
+  function createTodoElements(todoObj) {
+    const li = document.createElement("li");
+    li.dataset.id = todoObj.id;
+
+    if (todoObj.isCompleted) li.classList.add("done");
+
+    const label = document.createElement("label");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = todoObj.isCompleted;
+
+    const span = document.createElement("span");
+    span.innerText = todoObj.text;
+
+    label.appendChild(checkbox);
+    label.appendChild(span);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete";
+    deleteBtn.innerText = "✕";
+
+    li.appendChild(label);
+    li.appendChild(deleteBtn);
+    // todoList.appendChild(li)
+
+    deleteBtn.addEventListener("click", function () {
+      allTodos = allTodos.filter((t) => t.id !== todoObj.id);
+      LocalStorageSetItems();
+      renderTodos(allTodos);
+      updateTaskCounter();
+    });
+
+    checkbox.addEventListener("click", function () {
+      let targetedTodo = allTodos.find((t) => t.id === todoObj.id);
+      if (targetedTodo) {
+        targetedTodo.isCompleted = checkbox.checked;
+        li.classList.add("done");
+      }
+      li.classList.add("active");
+      LocalStorageSetItems();
+      renderTodos();
+
+      updateTaskCounter();
+    });
+
+    return li;
+  }
+}
+todoConcept();
+
+const timerText = document.querySelector(".timer-circle span");
+const startBtn = document.querySelector(".start");
+const resetBtn = document.querySelector(".reset");
+
+let mode = "study";
+let timeLeft = 25 * 60;
+let timer = null;
+
+function startTimer() {
+  if (timer) return;
+
+  timer = setInterval(() => {
+    timeLeft--;
+
+    if (timeLeft <= 0) {
+      changeMode();
+      return;
+    }
+
+    updateUI();
+  }, 1000);
 }
 
+function changeMode() {
+  clearInterval(timer);
+  timer = null;
+
+  if (mode === "study") {
+    mode = "break";
+    timeLeft = 5 * 60;
+  } else {
+    mode = "study";
+    timeLeft = 25 * 60;
+  }
+
+  updateUI();
+}
+
+function toggleTimer() {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+    startBtn.innerText = "Start";
+  } else {
+    startTimer();
+    startBtn.innerText = "Pause";
+  }
+}
+
+function resetTimer() {
+  clearInterval(timer);
+  timer = null;
+  mode = "study";
+  timeLeft = 25 * 60;
+  startBtn.innerText = "Start";
+  updateUI();
+}
+
+function updateUI() {
+  let min = Math.floor(timeLeft / 60);
+  let sec = timeLeft % 60;
+
+  timerText.innerText =
+    String(min).padStart(2, "0") + ":" +
+    String(sec).padStart(2, "0");
+}
+
+startBtn.addEventListener("click", toggleTimer);
+resetBtn.addEventListener("click", resetTimer);
+
+updateUI();
+
+function setActive(activeBtn){
+  document.querySelectorAll(".timer-tabs button").forEach((btn)=>{
+    console.log("hello");
+    
+  })
+}
+setActive();
