@@ -249,10 +249,20 @@ resetBtn.addEventListener("click", resetTimer);
 
 updateUI();
 
+let studyTimer = document.querySelector(".study-timer")
+
 function setActive(activeBtn){
   document.querySelectorAll(".timer-tabs button").forEach((btn)=>{
-    console.log("hello");
-    
+      btn.classList.remove("active");
   })
+  activeBtn.classList.add("active");
+
 }
-setActive();
+
+document.querySelectorAll(".timer-tabs button").forEach((btn)=>{
+  btn.addEventListener("click", function(){
+    setActive(this);
+  });
+});
+
+
