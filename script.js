@@ -181,8 +181,14 @@ const timerText = document.querySelector(".timer-circle span");
 const startBtn = document.querySelector(".start");
 const resetBtn = document.querySelector(".reset");
 
-let mode = "study";
-let timeLeft = 25 * 60;
+const DURATIONS = {
+  focus: 25 * 60,   // 25 minutes
+  study: 50 * 60    // 1 hour
+}
+
+
+let mode = "focus";
+let timeLeft = DURATIONS[mode];
 let timer = null;
 
 function startTimer() {
@@ -230,7 +236,7 @@ function resetTimer() {
   clearInterval(timer);
   timer = null;
   mode = "study";
-  timeLeft = 25 * 60;
+  timeLeft = DURATIONS[mode];
   startBtn.innerText = "Start";
   updateUI();
 }
@@ -249,15 +255,33 @@ resetBtn.addEventListener("click", resetTimer);
 
 updateUI();
 
+;
+
+
 let studyTimer = document.querySelector(".study-timer")
 
-function setActive(activeBtn){
-  document.querySelectorAll(".timer-tabs button").forEach((btn)=>{
-      btn.classList.remove("active");
-  })
+function setActive(activeBtn) {
+  // remove active class
+  document.querySelectorAll(".timer-tabs button").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
   activeBtn.classList.add("active");
 
+  // get mode from button
+  mode = activeBtn.dataset.mode;
+
+  // stop running timer
+  clearInterval(timer);
+  timer = null;
+  startBtn.innerText = "Start";
+
+  // set correct time
+  timeLeft = DURATIONS[mode];
+
+  updateUI();
 }
+
 
 document.querySelectorAll(".timer-tabs button").forEach((btn)=>{
   btn.addEventListener("click", function(){
