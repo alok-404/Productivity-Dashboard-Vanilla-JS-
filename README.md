@@ -1,92 +1,50 @@
-# Productivity Dashboard – Vanilla JavaScript
+# Productivity Dashboard (Vanilla JavaScript)
 
-A **minimal and distraction-free productivity dashboard** built using **HTML, CSS, and Vanilla JavaScript**.  
-This project focuses on strengthening core JavaScript fundamentals while creating a genuinely useful daily tool.
+A simple productivity dashboard built using **pure HTML, CSS, and Vanilla JavaScript**.  
+This project focuses on understanding **core JavaScript concepts**, not frameworks.
 
----
+## 🚀 Features
 
-## ✨ Features
+### 🕒 Real-Time Clock
+- Displays current time with seconds
+- Shows day, date, month, and year
+- 12-hour format with AM/PM
 
-- 🕒 **Real-time clock & date**
-- ✅ **To-Do List**
-  - Add new tasks
-  - Mark tasks as completed
-  - Delete tasks
-- 💾 **Persistent storage**
-  - Tasks are saved using **LocalStorage**
-- 📊 **Task Overview**
+### ✅ Todo List
+- Add, complete, and delete tasks
+- Tasks persist using `localStorage`
+- Live task counters:
   - Total tasks
   - Completed tasks
   - Remaining tasks
-- 🎯 **Reward Counter**
-  - Rewards increase as tasks are completed
-- 🎨 **Clean & minimal UI**
-  - Focused on clarity and usability
 
----
+### 🍅 Pomodoro Timer
+- Focus mode (25 minutes)
+- Break mode (5 minutes)
+- Automatic mode switching
+- Start, pause, and reset functionality
+- Mode tabs with active state
+- Clean and structured timer logic
+
+## 🧠 What I Learned
+- DOM manipulation
+- Event handling
+- `setInterval` and timer control
+- State management without frameworks
+- Using `localStorage` for persistence
+- Writing cleaner and more structured JavaScript
 
 ## 🛠️ Tech Stack
+- HTML
+- CSS
+- Vanilla JavaScript
 
-- **HTML5**
-- **CSS3**
-- **Vanilla JavaScript**
-- **LocalStorage API**
-
-No frameworks. No libraries. Pure fundamentals.
-
----
-
-## 📌 Project Purpose
-
-This project was built to:
-
-- Practice **DOM manipulation**
-- Improve **logic building and problem solving**
-- Understand **state management without frameworks**
-- Work with **browser storage (LocalStorage)**
-- Build a real, usable productivity tool from scratch
+## 📌 Future Improvements
+- Persist Pomodoro timer state
+- Track completed focus sessions
+- Rewards linked with focus sessions
+- Better code modularization
 
 ---
 
-## 🚀 Getting Started
-
-### Run Locally
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/alok-404/Productivity-Dashboard-Vanilla-JS-.git
-2. Open the project folder
-
-3. Open index.html in your browser
-
-4.  Start adding tasks
-
-5. No setup required.
-
-📂 Project Status
-
-🟡 In Progress
-
-Planned Features
-
-⏱️ Pomodoro / focus timer
-
-🔥 Productivity streak tracking
-
-📈 Weekly / monthly analytics
-
-🎨 UI improvements & animations
-
-📸 Preview
-
-Screenshots and live demo will be added soon.
-
-👨‍💻 Author
-
-Alok Chandra
-
-Built to strengthen JavaScript fundamentals — not just to complete another project.
-
-📄 License
-
-This project is open-source and available for learning and personal use.# Productivity Dashboard – Vanilla JavaScript
-
+This project is part of my journey to strengthen **JavaScript fundamentals and DSA concepts step by step**.

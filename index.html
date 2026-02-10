@@ -1,167 +1,157 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Productivity Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div class="app">
-
-  <!-- Top Bar -->
-  <header class="topbar">
-    <div class="left">
-      <button class="icon-btn">🌙</button>
-      <h1>Productivity Dashboard</h1>
-    </div>
-    <div class="right">
-      <button class="save-btn">Save Changes</button>
-      <button class="discard-btn">Discard</button>
-    </div>
-  </header>
-
-  <!-- Main Grid -->
-  <div class="dashboard">
-
-    <!-- Left Column -->
-    <div class="column">
-
-      <!-- Current Time -->
-      <div class="card time-card">
-        <p class="label">Current Time</p>
-        <h2>10:34:52 AM</h2>
-        <span>Wey, January 27, 2025</span>
-      </div>
-
-      <!-- Today Overview -->
-<div class="card overview-card">
-  <p class="label">Today Overview</p>
-
-  <div class="overview-item">
-    <span class="title">Total Tasks</span>
-    <span id="total" class="value ">5</span>
-  </div>
-
-  <div class="overview-item">
-    <span class="title">Completed</span>
-    <span id="done" class="value done">2</span>
-  </div>
-
-  <div class="overview-item">
-    <span class="title">Remaining</span>
-    <span id="pending" class="value pending">3</span>
-  </div>
-
-  <div class="overview-item">
-    <span class="title">Focus Time</span>
-    <span class="value">1h 40m</span>
-  </div>
-</div>
-
-<!-- Assignments -->
-<div class="card assignment-card">
-  <p class="label">Assignments</p>
-
-  <div class="assignment-item urgent">
-    <span>History Essay</span>
-    <small>Due Today</small>
-  </div>
-
-  <div class="assignment-item warning">
-    <span>Science Lab Report</span>
-    <small>Due Tomorrow</small>
-  </div>
-
-  <div class="assignment-item normal">
-    <span>Math Homework</span>
-    <small>3 days left</small>
-  </div>
-</div>
-
-
-
-    </div>
-
-    <!-- Center Column -->
-    <div class="column">
-
-      <!-- Timer -->
-      <div class="card timer-card">
-   <div class="timer-tabs">
-  <button class="active" data-mode="focus">Focus Timer</button>
-  <button data-mode="study">Study Timer</button>
-</div>
-
-
-
-        <div class="timer-circle">
-          <span>25:00</span>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Productivity Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="left">
+          <button class="icon-btn">🌙</button>
+          <h1>Productivity Dashboard</h1>
         </div>
-
-        <div class="timer-actions">
-          <button class="start primary">Start</button>
-          <button class="reset">Reset</button>
+        <div class="right">
+          <button class="save-btn">Save Changes</button>
+          <button class="discard-btn">Discard</button>
         </div>
-      </div>
+      </header>
 
-      <!-- Today Schedule -->
-      <div class="card">
-        <p class="label">Today's Schedule</p>
+      <!-- Main Grid -->
+      <div class="dashboard">
+        <!-- Left Column -->
+        <div class="column">
+          <!-- Current Time -->
+          <div class="card time-card">
+            <p class="label">Current Time</p>
+            <h2>10:34:52 AM</h2>
+            <span>Wey, January 27, 2025</span>
+          </div>
 
-        <div class="schedule-item">
-          <span class="time">09:00</span>
-          <div>
-            <strong>Morning Meeting</strong>
-            <p>Team standup</p>
+          <!-- Today Overview -->
+          <div class="card overview-card">
+            <p class="label">Today Overview</p>
+
+            <div class="overview-item">
+              <span class="title">Total Tasks</span>
+              <span id="total" class="value">5</span>
+            </div>
+
+            <div class="overview-item">
+              <span class="title">Completed</span>
+              <span id="done" class="value done">2</span>
+            </div>
+
+            <div class="overview-item">
+              <span class="title">Remaining</span>
+              <span id="pending" class="value pending">3</span>
+            </div>
+
+            <div class="overview-item">
+              <span class="title">Focus Time</span>
+              <span class="value">1h 40m</span>
+            </div>
+          </div>
+
+          <!-- Assignments -->
+          <div class="card assignment-card">
+            <p class="label">Assignments</p>
+
+            <div class="assignment-item urgent">
+              <span>History Essay</span>
+              <small>Due Today</small>
+            </div>
+
+            <div class="assignment-item warning">
+              <span>Science Lab Report</span>
+              <small>Due Tomorrow</small>
+            </div>
+
+            <div class="assignment-item normal">
+              <span>Math Homework</span>
+              <small>3 days left</small>
+            </div>
           </div>
         </div>
 
-        <div class="schedule-item">
-          <span class="time">14:00</span>
-          <div>
-            <strong>Study Session</strong>
-            <p>Math homework</p>
+        <!-- Center Column -->
+        <div class="column">
+          <!-- Timer -->
+          <div class="card timer-card">
+            <div class="timer-tabs">
+              <button data-mode="focus" class="active">Focus</button>
+              <button data-mode="break">Break</button>
+            </div>
+
+            <div class="timer-circle">
+              <span>25:00</span>
+            </div>
+
+            <div class="timer-actions">
+              <button class="start primary">Start</button>
+              <button class="reset ">Reset</button>
+            </div>
+          </div>
+
+          <!-- Today Schedule -->
+          <div class="card">
+            <p class="label">Today's Schedule</p>
+
+            <div class="schedule-item">
+              <span class="time">09:00</span>
+              <div>
+                <strong>Morning Meeting</strong>
+                <p>Team standup</p>
+              </div>
+            </div>
+
+            <div class="schedule-item">
+              <span class="time">14:00</span>
+              <div>
+                <strong>Study Session</strong>
+                <p>Math homework</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-    </div>
+        <!-- Right Column -->
+        <div class="column">
+          <!-- Reward Hub -->
+          <div class="card reward-card">
+            <p class="label">Rewards Hub</p>
+            <h3>Tasks Completed</h3>
+            <span class="reward-count">1</span>
 
-    <!-- Right Column -->
-    <div class="column">
+            <div class="reward-box">
+              🎁
+              <p>No reward available</p>
+            </div>
+          </div>
 
-      <!-- Reward Hub -->
-      <div class="card reward-card">
-        <p class="label">Rewards Hub</p>
-        <h3>Tasks Completed</h3>
-        <span class="reward-count">1</span>
+          <!-- To-do -->
+          <div class="card todo-card">
+            <div class="card-header">
+              <img
+                width="20"
+                height="20"
+                src="https://img.icons8.com/external-flat-design-circle/64/external-Todo-List-business-flat-design-circle.png"
+              />
+              <p class="label">To-Do List</p>
+            </div>
 
-        <div class="reward-box">
-          🎁
-          <p>No reward available</p>
-        </div>
-      </div>
+            <div class="todoInput">
+              <input type="text" placeholder="Add new task..." />
+              <button>+</button>
+            </div>
 
-      <!-- To-do -->
-  <div class="card todo-card">
-  <div class="card-header">
-    <img width="20" height="20"
-      src="https://img.icons8.com/external-flat-design-circle/64/external-Todo-List-business-flat-design-circle.png" />
-    <p class="label">To-Do List</p>
-  </div>
+            <p class="error-text">Todo cannot be empty</p>
 
-  <div class="todoInput">
-    <input type="text" placeholder="Add new task..." />
-    <button>+</button>
-  </div>
-
-<p class="error-text">Todo cannot be empty</p>
-
-
-  <ul class="todo-list">
-    <!-- <li class="done">
+            <ul class="todo-list">
+              <!-- <li class="done">
       <label>
         <input type="checkbox" checked />
         <span>Resume Update</span>
@@ -169,7 +159,7 @@
       <button class="delete">✕</button>
     </li> -->
 
-    <!-- <li class="active">
+              <!-- <li class="active">
       <label>
         <input type="checkbox" />
         <span>React Practice</span>
@@ -177,25 +167,20 @@
       <button class="delete">✕</button>
     </li> -->
 
-    <!-- <li>
+              <!-- <li>
       <label>
         <input type="checkbox" />
         <span>Assignment Submission</span>
       </label>
       <button class="delete">✕</button>
     </li> -->
-  </ul>
-  <p class="small">2 of 3 tasks remaining</p>
-</div>
-
-
+            </ul>
+            <p class="small">2 of 3 tasks remaining</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-  </div>
-
-</div>
-
-
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -177,19 +177,23 @@ function todoConcept() {
 }
 todoConcept();
 
+// ===== Pomodoro Timer (FINAL, CLEAN) =====
+
 const timerText = document.querySelector(".timer-circle span");
 const startBtn = document.querySelector(".start");
 const resetBtn = document.querySelector(".reset");
+const tabButtons = document.querySelectorAll(".timer-tabs button");
 
-const DURATIONS = {
-  focus: 25 * 60,   // 25 minutes
-  study: 50 * 60    // 1 hour
-}
-
+const MODES = {
+  focus: { duration: 25 * 60, next: "break" },
+  break: { duration: 5 * 60, next: "focus" },
+};
 
 let mode = "focus";
-let timeLeft = DURATIONS[mode];
+let timeLeft = MODES[mode].duration;
 let timer = null;
+
+// ---------- Core Logic ----------
 
 function startTimer() {
   if (timer) return;
@@ -210,14 +214,10 @@ function changeMode() {
   clearInterval(timer);
   timer = null;
 
-  if (mode === "study") {
-    mode = "break";
-    timeLeft = 5 * 60;
-  } else {
-    mode = "study";
-    timeLeft = 25 * 60;
-  }
+  mode = MODES[mode].next;
+  timeLeft = MODES[mode].duration;
 
+  syncTabsWithMode();
   updateUI();
 }
 
@@ -230,63 +230,60 @@ function toggleTimer() {
     startTimer();
     startBtn.innerText = "Pause";
   }
+
 }
 
 function resetTimer() {
   clearInterval(timer);
   timer = null;
-  mode = "study";
-  timeLeft = DURATIONS[mode];
+
+  timeLeft = MODES[mode].duration;
   startBtn.innerText = "Start";
+
   updateUI();
 }
 
+// ---------- UI Helpers ----------
+
 function updateUI() {
-  let min = Math.floor(timeLeft / 60);
-  let sec = timeLeft % 60;
+  const min = Math.floor(timeLeft / 60);
+  const sec = timeLeft % 60;
 
   timerText.innerText =
-    String(min).padStart(2, "0") + ":" +
-    String(sec).padStart(2, "0");
+    String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
 }
 
-startBtn.addEventListener("click", toggleTimer);
-resetBtn.addEventListener("click", resetTimer);
+function syncTabsWithMode() {
+  tabButtons.forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.mode === mode);
+  });
+}
 
-updateUI();
-
-;
-
-
-let studyTimer = document.querySelector(".study-timer")
+// ---------- Tabs ----------
 
 function setActive(activeBtn) {
-  // remove active class
-  document.querySelectorAll(".timer-tabs button").forEach(btn => {
-    btn.classList.remove("active");
-  });
-
-  activeBtn.classList.add("active");
-
-  // get mode from button
   mode = activeBtn.dataset.mode;
 
-  // stop running timer
   clearInterval(timer);
   timer = null;
   startBtn.innerText = "Start";
 
-  // set correct time
-  timeLeft = DURATIONS[mode];
+  timeLeft = MODES[mode].duration;
 
+  syncTabsWithMode();
   updateUI();
 }
 
-
-document.querySelectorAll(".timer-tabs button").forEach((btn)=>{
-  btn.addEventListener("click", function(){
+tabButtons.forEach((btn) => {
+  btn.addEventListener("click", function () {
     setActive(this);
   });
 });
 
+// ---------- Init ----------
 
+syncTabsWithMode();
+updateUI();
+
+startBtn.addEventListener("click", toggleTimer);
+resetBtn.addEventListener("click", resetTimer);
