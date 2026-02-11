@@ -186,12 +186,16 @@ const tabButtons = document.querySelectorAll(".timer-tabs button");
 
 const MODES = {
   focus: { duration: 25 * 60, next: "break" },
-  break: { duration: 5 * 60, next: "focus" },
+  study: { duration: 50 * 60, next: "break" },
+  break: { duration: 5 * 60, next: null }, // break ke baad wapas lastWorkMode
 };
+
 
 let mode = "focus";
 let timeLeft = MODES[mode].duration;
+let lastWorkMode = "focus"; // ya "study"
 let timer = null;
+   updateModeLabel();
 
 // ---------- Core Logic ----------
 
@@ -205,7 +209,7 @@ function startTimer() {
       changeMode();
       return;
     }
-
+   updateModeLabel();
     updateUI();
   }, 1000);
 }
@@ -213,11 +217,19 @@ function startTimer() {
 function changeMode() {
   clearInterval(timer);
   timer = null;
+  startBtn.innerText = "Start";
 
-  mode = MODES[mode].next;
+  if (mode === "focus" || mode === "study") {
+    lastWorkMode = mode;
+    mode = "break";
+  } else if (mode === "break") {
+    mode = lastWorkMode;
+  }
+
   timeLeft = MODES[mode].duration;
 
   syncTabsWithMode();
+   updateModeLabel();
   updateUI();
 }
 
@@ -230,7 +242,6 @@ function toggleTimer() {
     startTimer();
     startBtn.innerText = "Pause";
   }
-
 }
 
 function resetTimer() {
@@ -279,6 +290,17 @@ tabButtons.forEach((btn) => {
     setActive(this);
   });
 });
+
+function updateModeLabel() {
+  const label = document.querySelector(".current-mode");
+  if (mode === "break") {
+    label.innerText = "BREAK TIME 💤";
+  } else if (mode === "focus") {
+    label.innerText = "FOCUS MODE 🔥";
+  } else {
+    label.innerText = "STUDY MODE 📚";
+  }
+}
 
 // ---------- Init ----------
 
