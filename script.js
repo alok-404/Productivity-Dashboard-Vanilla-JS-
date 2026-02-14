@@ -177,7 +177,7 @@ function todoConcept() {
 }
 todoConcept();
 
-// ===== Pomodoro Timer (FINAL, CLEAN) =====
+// ===== Pomodoro Timer  =====
 
 const timerText = document.querySelector(".timer-circle span");
 const startBtn = document.querySelector(".start");
@@ -190,12 +190,91 @@ const MODES = {
   break: { duration: 5 * 60, next: null }, // break ke baad wapas lastWorkMode
 };
 
+//set timerState in localStorage
+function saveState() {
+  localStorage.setItem("pomodoroState", JSON.stringify({
+    mode,
+    timers,
+    lastWorkMode,
+    isRunning: !!timer,
+    lastUpdated: Date.now(),
+  }));
+}
+//Get timerState from localStorage
+
+function loadState() {
+  const raw = localStorage.getItem("pomodoroState");
+  if (!raw) return;
+
+  const state = JSON.parse(raw);
+
+  mode = state.mode || "focus";
+  lastWorkMode = state.lastWorkMode || "focus";
+
+  // 🔥 Backward compatibility
+  if (state.timers) {
+    timers = state.timers;
+  } else if (typeof state.timeLeft === "number") {
+    // Old format se migrate
+    timers[mode] = state.timeLeft;
+  }
+
+if (state.isRunning) {
+  let elapsed = Math.floor((Date.now() - state.lastUpdated) / 1000);
+
+  while (elapsed > 0) {
+    if (timers[mode] > elapsed) {
+      timers[mode] -= elapsed;
+      elapsed = 0;
+    } else {
+      elapsed -= timers[mode];
+      changeMode(); // resets timers[mode] for new mode
+    }
+  }
+}
+
+
+  while (timers[mode] <= 0 && state.isRunning) {
+    changeMode();
+  }
+
+  // Clamp corrupted or negative values
+if (!Number.isFinite(timers[mode]) || timers[mode] < 0) {
+  timers[mode] = 0;
+}
+ 
+  syncTabsWithMode();
+  updateModeLabel();
+  updateUI();
+
+  if (state.isRunning) {
+    startTimer();
+    startBtn.innerText = "Pause";
+  }
+}
+
+let timers = {
+  focus: MODES.focus.duration,
+  study: MODES.study.duration,
+  break: MODES.break.duration,
+};
 
 let mode = "focus";
-let timeLeft = MODES[mode].duration;
+// let timeLeft = MODES[mode].duration;
 let lastWorkMode = "focus"; // ya "study"
 let timer = null;
-   updateModeLabel();
+
+updateModeLabel();
+
+loadState();
+
+function getTimeLeft() {
+  return timers[mode];
+}
+
+function setTimeLeft(val) {
+  timers[mode] = val;
+}
 
 // ---------- Core Logic ----------
 
@@ -203,15 +282,17 @@ function startTimer() {
   if (timer) return;
 
   timer = setInterval(() => {
-    timeLeft--;
+    timers[mode]--;
 
-    if (timeLeft <= 0) {
+    if (timers[mode] <= 0) {
       changeMode();
       return;
     }
-   updateModeLabel();
+
+    updateModeLabel();
     updateUI();
-  }, 1000);
+    saveState();
+  }, 1);
 }
 
 function changeMode() {
@@ -226,11 +307,12 @@ function changeMode() {
     mode = lastWorkMode;
   }
 
-  timeLeft = MODES[mode].duration;
+  setTimeLeft(MODES[mode].duration);
 
   syncTabsWithMode();
-   updateModeLabel();
+  updateModeLabel();
   updateUI();
+  saveState();
 }
 
 function toggleTimer() {
@@ -242,27 +324,31 @@ function toggleTimer() {
     startTimer();
     startBtn.innerText = "Pause";
   }
+  saveState();
 }
 
 function resetTimer() {
   clearInterval(timer);
   timer = null;
 
-  timeLeft = MODES[mode].duration;
+  timers[mode] = MODES[mode].duration;
   startBtn.innerText = "Start";
 
   updateUI();
+  saveState();
 }
 
 // ---------- UI Helpers ----------
 
 function updateUI() {
-  const min = Math.floor(timeLeft / 60);
-  const sec = timeLeft % 60;
+  const t = timers[mode];
+  const min = Math.floor(t / 60);
+  const sec = t % 60;
 
   timerText.innerText =
     String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
 }
+
 
 function syncTabsWithMode() {
   tabButtons.forEach((btn) => {
@@ -279,10 +365,9 @@ function setActive(activeBtn) {
   timer = null;
   startBtn.innerText = "Start";
 
-  timeLeft = MODES[mode].duration;
-
   syncTabsWithMode();
   updateUI();
+  saveState();
 }
 
 tabButtons.forEach((btn) => {
@@ -293,6 +378,7 @@ tabButtons.forEach((btn) => {
 
 function updateModeLabel() {
   const label = document.querySelector(".current-mode");
+
   if (mode === "break") {
     label.innerText = "BREAK TIME 💤";
   } else if (mode === "focus") {
