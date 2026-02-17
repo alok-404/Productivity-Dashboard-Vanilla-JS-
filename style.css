@@ -13,7 +13,7 @@ body {
 .app {
   max-width: 1300px;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
 }
 
 /* Topbar */
@@ -139,36 +139,166 @@ body {
   color: #e67e22;
 }
 
-/* Assignments */
+
+/* ===== Assignments Card ===== */
+.assignment-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 220px; 
+}
+
+.assignment-card .label {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.assignment-list {
+  flex: 1;                    /* bachi hui height le lega */
+  overflow-y: auto;          /* yahin scroll aayega */
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Assignment item styles */
 .assignment-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 10px 12px;
   border-radius: 10px;
-  margin-bottom: 8px;
   font-size: 14px;
 }
 
-.assignment-item small {
-  font-size: 12px;
+.assignment-item span {
+  font-weight: 500;
 }
 
-/* status colors */
+.assignment-item small {
+  opacity: 0.8;
+}
+
+/* Urgency colors */
 .assignment-item.urgent {
-  background: #ffeaea;
-  color: #c0392b;
+  background: rgba(255, 80, 80, 0.15);
+  border-left: 4px solid #ff5050;
 }
 
 .assignment-item.warning {
-  background: #fff3d6;
-  color: #d35400;
+  background: rgba(255, 170, 0, 0.15);
+  border-left: 4px solid #ffaa00;
 }
 
 .assignment-item.normal {
-  background: #eef4ff;
-  color: #2c5fd5;
+  background: rgba(0, 200, 120, 0.15);
+  border-left: 4px solid #00c878;
 }
+
+/* Scrollbar styling */
+.assignment-list::-webkit-scrollbar {
+  width: 6px;
+}
+.assignment-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+}
+.assignment-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.3) transparent;
+}
+
+/* Input Row */
+.assignment-input {
+  display: flex;
+  gap: 8px;
+}
+
+.assignment-input input[type="text"],
+.assignment-input input[type="date"] {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+}
+
+.assignment-input input:focus {
+  border-color: #6c63ff;
+}
+
+.assignment-add {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #6c63ff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.assignment-add:hover {
+  opacity: 0.9;
+}
+
+/* Assignment List */
+.assignment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Assignment Item */
+.assignment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f6f7fb;
+  font-size: 14px;
+}
+
+.assignment-item span {
+  font-weight: 600;
+}
+
+.assignment-item small {
+  opacity: 0.7;
+}
+
+/* States */
+.assignment-item.urgent {
+  border-left: 4px solid #ff4d4d;
+  background: #fff0f0;
+}
+
+.assignment-item.warning {
+  border-left: 4px solid #ffb703;
+  background: #fff7e6;
+}
+
+.assignment-item.normal {
+  border-left: 4px solid #38b000;
+  background: #f1fff0;
+}
+
+/* Delete Button */
+.assignment-delete {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.assignment-delete:hover {
+  opacity: 1;
+  color: red;
+}
+
 
 /* Timer */
 .timer-card {
@@ -226,16 +356,112 @@ body {
 }
 
 /* Schedule */
+.schedule-card {
+  height: 292px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.schedule-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr auto;
+  gap: 6px;
+}
+
+.schedule-form input,
+.schedule-form button {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 12px;
+}
+
+.schedule-form button {
+  cursor: pointer;
+  background: #00c878;
+  color: #000;
+  font-weight: 600;
+}
+
+.schedule-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+    scrollbar-gutter: stable;
+}
+
+/* Chrome / Edge / Safari */
+.schedule-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.schedule-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.schedule-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+.schedule-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Firefox */
+.schedule-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.35) transparent;
+}
+
 .schedule-item {
   display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  position: relative;
 }
 
 .schedule-item .time {
-  color: #6c5ce7;
-  font-weight: bold;
+  min-width: 50px;
+  font-weight: 600;
 }
+
+.schedule-item .delete {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.schedule-item .delete:hover {
+  opacity: 1;
+}
+
+/* Status */
+.schedule-item.past {
+  opacity: 0.5;
+}
+.schedule-item.now {
+  border-left: 4px solid #00e5ff;
+  background: rgba(0, 229, 255, 0.15);
+}
+.schedule-item.upcoming {
+  border-left: 4px solid #00c878;
+  background: rgba(0, 200, 120, 0.15);
+}
+
 
 /* Rewards */
 .reward-card {

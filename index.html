@@ -51,30 +51,34 @@
             </div>
 
             <div class="overview-item">
-              <span class="title">Focus Time</span>
-              <span class="value">1h 40m</span>
+              <span class="title">Focus/Study Time</span>
+              <span class="value" id="focusTimeValue">0m</span>
             </div>
+
+            <div class="overview-item">
+  <span class="title">Pomodoro Sessions</span>
+  <span id="sessionCount" class="value">0</span>
+</div>
+
           </div>
 
           <!-- Assignments -->
           <div class="card assignment-card">
-            <p class="label">Assignments</p>
+  <p class="label">Assignments</p>
 
-            <div class="assignment-item urgent">
-              <span>History Essay</span>
-              <small>Due Today</small>
-            </div>
+  <!-- Add Assignment -->
+  <div class="assignment-input">
+    <input type="text" class="assignment-title" placeholder="New assignment..." />
+    <input type="date" class="assignment-date" />
+    <button class="assignment-add">Add</button>
+  </div>
 
-            <div class="assignment-item warning">
-              <span>Science Lab Report</span>
-              <small>Due Tomorrow</small>
-            </div>
+  <!-- Assignment List -->
+  <div class="assignment-list">
+    <!-- JS se yahan items render honge -->
+  </div>
+</div>
 
-            <div class="assignment-item normal">
-              <span>Math Homework</span>
-              <small>3 days left</small>
-            </div>
-          </div>
         </div>
 
         <!-- Center Column -->
@@ -98,25 +102,19 @@
           </div>
 
           <!-- Today Schedule -->
-          <div class="card">
-            <p class="label">Today's Schedule</p>
+<div class="card schedule-card">
+  <p class="label">Today's Schedule</p>
 
-            <div class="schedule-item">
-              <span class="time">09:00</span>
-              <div>
-                <strong>Morning Meeting</strong>
-                <p>Team standup</p>
-              </div>
-            </div>
+  <div class="schedule-form">
+    <input type="time" id="scheduleTime" />
+    <input type="text" id="scheduleTitle" placeholder="Title" />
+    <input type="text" id="scheduleDesc" placeholder="Description" />
+    <button id="addScheduleBtn">Add</button>
+  </div>
 
-            <div class="schedule-item">
-              <span class="time">14:00</span>
-              <div>
-                <strong>Study Session</strong>
-                <p>Math homework</p>
-              </div>
-            </div>
-          </div>
+  <div class="schedule-list"></div>
+</div>
+
         </div>
 
         <!-- Right Column -->
@@ -131,6 +129,9 @@
               🎁
               <p>No reward available</p>
             </div>
+
+            <button class="claim-reward">Claim</button>
+
           </div>
 
           <!-- To-do -->
