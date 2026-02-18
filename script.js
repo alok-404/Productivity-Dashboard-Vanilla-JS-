@@ -26,6 +26,21 @@ const days = [
   "Saturday",
 ];
 
+
+const rewardTextEl = document.getElementById("rewardText");
+const rewardTimeEl = document.getElementById("rewardTime");
+const completedCountEl = document.getElementById("completedCount");
+const claimRewardBtn = document.querySelector(".claim-reward");
+const resetRewardBtn = document.querySelector(".reward-reset");
+
+const REWARDS = [
+  { text: "Watch a chess match analysis", time: "15 minutes" },
+  { text: "Go for a short walk", time: "10 minutes" },
+  { text: "Listen to music", time: "2 songs" },
+  { text: "Do stretching", time: "5 minutes" },
+  { text: "Drink water + relax", time: "2 minutes" },
+];
+
 //date and time
 function updateTime() {
   let date = new Date();
@@ -113,22 +128,35 @@ function todoConcept() {
     updateTaskCounter();
   }
 
-  function updateTaskCounter() {
-    const remaining = allTodos.filter((t) => !t.isCompleted).length;
-    const total = allTodos.length;
-    const completedTask = allTodos.filter((t) => t.isCompleted).length;
-    console.log(completedTask);
+function updateTaskCounter() {
+  const remaining = allTodos.filter((t) => !t.isCompleted).length;
+  const total = allTodos.length;
+  const completedTask = allTodos.filter((t) => t.isCompleted).length;
 
+  if (remainingTask) {
     remainingTask.textContent = `${remaining} of ${total} tasks remaining`;
-    rewardCount.textContent = `${completedTask}`;
-    overviewTotalTask.textContent = `${total}`;
-    overviewTotalTaskCompleted.textContent = `${completedTask}`;
-    overviewTotalTaskRemaining.textContent = `${remaining}`;
-
-    checkForRealReward(completedTask);
-    
-
   }
+
+  if (rewardCount) {
+    rewardCount.textContent = `${completedTask}`;
+  }
+
+  if (overviewTotalTask) {
+    overviewTotalTask.textContent = `${total}`;
+  }
+
+  if (overviewTotalTaskCompleted) {
+    overviewTotalTaskCompleted.textContent = `${completedTask}`;
+  }
+
+  if (overviewTotalTaskRemaining) {
+    overviewTotalTaskRemaining.textContent = `${remaining}`;
+  }
+
+  // 🔥 Reward logic yahin se call hoga (single source of truth)
+  maybeUnlockReward(completedTask);
+}
+
 
   function createTodoElements(todoObj) {
     const li = document.createElement("li");
@@ -175,6 +203,8 @@ function todoConcept() {
       renderTodos();
 
       updateTaskCounter();
+      
+
     });
 
     return li;
@@ -681,25 +711,9 @@ renderSchedule();
 setInterval(renderSchedule, 60 * 1000);
 
 
-const rewardBox = document.querySelector(".reward-box p");
-const claimBtn = document.querySelector(".claim-reward");
 
-
-console.log(rewardBox, claimBtn);
-
-
-const REAL_REWARDS = [
-  "Go watch TV for 15 minutes 📺",
-  "Take a 10 minute walk 🚶‍♂️",
-  "Do 20 pushups 💪",
-  "Listen to 1 song you love 🎧",
-  "Drink water & stretch 🥤",
-  "Close eyes & breathe for 2 minutes 😌",
-  "Text a friend 👋",
-];
 
 let rewardState = JSON.parse(localStorage.getItem("rewardState")) || {
-  unlockedAt: [],
   usedRewards: [],
   currentReward: null,
 };
@@ -708,57 +722,108 @@ function saveRewardState() {
   localStorage.setItem("rewardState", JSON.stringify(rewardState));
 }
 
-if (rewardState.currentReward) {
-  rewardBox.innerText = rewardState.currentReward;
-}
+function maybeUnlockReward(completedTaskCount) {
+  completedCountEl.innerText = completedTaskCount;
 
+  if (completedTaskCount > 0 && completedTaskCount % 3 === 0) {
+    const available = REWARDS.filter(
+      (r) => !rewardState.usedRewards.includes(r.text)
+    );
 
-function shouldGiveReward(completedCount) {
-  return completedCount > 0 && completedCount % 3 === 0;
-}
+    if (!available.length) {
+      rewardTextEl.innerText = "All rewards used 🎉";
+      rewardTimeEl.innerText = "";
+      return;
+    }
 
-function getRandomReward() {
-  const available = REAL_REWARDS.filter(
-    (r) => !rewardState.usedRewards.includes(r)
-  );
-
-  if (available.length === 0) {
-    rewardState.usedRewards = [];
+    const random = available[Math.floor(Math.random() * available.length)];
+    rewardState.currentReward = random;
     saveRewardState();
-    return getRandomReward();
+
+    rewardTextEl.innerText = random.text;
+    rewardTimeEl.innerText = random.time;
+  }
+}
+
+claimRewardBtn.addEventListener("click", () => {
+  if (!rewardState.currentReward) {
+    alert("No reward unlocked yet.");
+    return;
   }
 
-  const idx = Math.floor(Math.random() * available.length);
-  return available[idx];
-}
-
-function checkForRealReward(completedCount) {
-  if (!shouldGiveReward(completedCount)) return;
-
-  if (rewardState.unlockedAt.includes(completedCount)) return;
-
-  const reward = getRandomReward();
-
-  rewardState.unlockedAt.push(completedCount);
-  rewardState.usedRewards.push(reward);
-  rewardState.currentReward = reward;
-
+  rewardState.usedRewards.push(rewardState.currentReward.text);
+  rewardState.currentReward = null;
   saveRewardState();
-  rewardBox.innerText = reward;
+
+  rewardTextEl.innerText = "Complete tasks to earn rewards!";
+  rewardTimeEl.innerText = "";
+});
+
+resetRewardBtn.addEventListener("click", () => {
+  rewardState = { usedRewards: [], currentReward: null };
+  saveRewardState();
+  rewardTextEl.innerText = "Rewards reset. Complete tasks!";
+  rewardTimeEl.innerText = "";
+});
+
+
+function restoreRewardUI() {
+  if (rewardState.currentReward) {
+    rewardTextEl.innerText = rewardState.currentReward.text;
+    rewardTimeEl.innerText = rewardState.currentReward.time;
+  } else {
+    rewardTextEl.innerText = "Complete tasks to earn rewards!";
+    rewardTimeEl.innerText = "";
+  }
 }
 
-function updateTaskCounter() {
-  const remaining = allTodos.filter((t) => !t.isCompleted).length;
-  const total = allTodos.length;
-  const completedTask = allTodos.filter((t) => t.isCompleted).length;
+restoreRewardUI();
 
-  remainingTask.textContent = `${remaining} of ${total} tasks remaining`;
-  rewardCount.textContent = `${completedTask}`;
+const discardBtn = document.querySelector(".discard-btn")
+console.log(discardBtn);
 
-  checkForRealReward(completedTask); // 🔥 yahan hook
-  
+
+
+function resetAllData() {
+  localStorage.removeItem("PDtodos");
+  localStorage.removeItem("pomodoroState");
+  localStorage.removeItem("pomodoroStats");
+  localStorage.removeItem("PDassignments");
+  localStorage.removeItem("todaySchedule");
+  localStorage.removeItem("rewardState");
+
+  location.reload();
 }
 
-console.log(rewardBox);       // null nahi hona chahiye
-console.log(claimBtn);       // null nahi hona chahiye
-console.log(rewardState);    // object hona chahiye
+
+
+discardBtn.addEventListener("click",function(){
+  const ok = confirm("This will reset all your data. Are you sure?");
+  if (!ok) return;
+
+  resetAllData();
+})
+
+
+
+const themeToggleBtn = document.getElementById("themeToggle");
+
+function applyTheme(theme) {
+  if (theme === "dark") {
+    document.body.classList.add("dark");
+    themeToggleBtn.innerText = "☀️";
+  } else {
+    document.body.classList.remove("dark");
+    themeToggleBtn.innerText = "🌙";
+  }
+}
+
+const savedTheme = localStorage.getItem("theme") || "light";
+applyTheme(savedTheme);
+
+themeToggleBtn.addEventListener("click", () => {
+  const isDark = document.body.classList.contains("dark");
+  const nextTheme = isDark ? "light" : "dark";
+  localStorage.setItem("theme", nextTheme);
+  applyTheme(nextTheme);
+});

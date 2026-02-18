@@ -11,12 +11,13 @@
       <!-- Top Bar -->
       <header class="topbar">
         <div class="left">
-          <button class="icon-btn">🌙</button>
+          <button class="icon-btn" id="themeToggle">🌙</button>
+
           <h1>Productivity Dashboard</h1>
         </div>
         <div class="right">
-          <button class="save-btn">Save Changes</button>
-          <button class="discard-btn">Discard</button>
+          <!-- <button class="save-btn">Save Changes</button> -->
+          <button class="discard-btn">Reset all Data</button>
         </div>
       </header>
 
@@ -56,29 +57,31 @@
             </div>
 
             <div class="overview-item">
-  <span class="title">Pomodoro Sessions</span>
-  <span id="sessionCount" class="value">0</span>
-</div>
-
+              <span class="title">Pomodoro Sessions</span>
+              <span id="sessionCount" class="value">0</span>
+            </div>
           </div>
 
           <!-- Assignments -->
           <div class="card assignment-card">
-  <p class="label">Assignments</p>
+            <p class="label">Assignments</p>
 
-  <!-- Add Assignment -->
-  <div class="assignment-input">
-    <input type="text" class="assignment-title" placeholder="New assignment..." />
-    <input type="date" class="assignment-date" />
-    <button class="assignment-add">Add</button>
-  </div>
+            <!-- Add Assignment -->
+            <div class="assignment-input">
+              <input
+                type="text"
+                class="assignment-title"
+                placeholder="New assignment..."
+              />
+              <input type="date" class="assignment-date" />
+              <button class="assignment-add">Add</button>
+            </div>
 
-  <!-- Assignment List -->
-  <div class="assignment-list">
-    <!-- JS se yahan items render honge -->
-  </div>
-</div>
-
+            <!-- Assignment List -->
+            <div class="assignment-list">
+              <!-- JS se yahan items render honge -->
+            </div>
+          </div>
         </div>
 
         <!-- Center Column -->
@@ -97,41 +100,51 @@
 
             <div class="timer-actions">
               <button class="start primary">Start</button>
-              <button class="reset ">Reset</button>
+              <button class="reset">Reset</button>
             </div>
           </div>
 
           <!-- Today Schedule -->
-<div class="card schedule-card">
-  <p class="label">Today's Schedule</p>
+          <div class="card schedule-card">
+            <p class="label">Today's Schedule</p>
 
-  <div class="schedule-form">
-    <input type="time" id="scheduleTime" />
-    <input type="text" id="scheduleTitle" placeholder="Title" />
-    <input type="text" id="scheduleDesc" placeholder="Description" />
-    <button id="addScheduleBtn">Add</button>
-  </div>
+            <div class="schedule-form">
+              <input type="time" id="scheduleTime" />
+              <input type="text" id="scheduleTitle" placeholder="Title" />
+              <input type="text" id="scheduleDesc" placeholder="Description" />
+              <button id="addScheduleBtn">Add</button>
+            </div>
 
-  <div class="schedule-list"></div>
-</div>
-
+            <div class="schedule-list"></div>
+          </div>
         </div>
 
         <!-- Right Column -->
         <div class="column">
           <!-- Reward Hub -->
           <div class="card reward-card">
-            <p class="label">Rewards Hub</p>
-            <h3>Tasks Completed</h3>
-            <span class="reward-count">1</span>
-
-            <div class="reward-box">
-              🎁
-              <p>No reward available</p>
+            <div class="reward-header">
+              <div class="reward-title">🎁 <span>Rewards Hub</span></div>
+              <button class="reward-reset" title="Reset rewards">↻</button>
             </div>
 
-            <button class="claim-reward">Claim</button>
+            <div class="reward-stats">
+              <p>Tasks Completed</p>
+              <h2 id="completedCount">0</h2>
+            </div>
 
+            <div class="reward-highlight">
+              <div class="reward-icon">🎁 </div>
+              <p class="reward-label">Your Reward:</p>
+              <h3 id="rewardText">Complete tasks to earn rewards!</h3>
+              <small id="rewardTime"></small>
+
+              <button class="claim-reward">Claim Reward</button>
+            </div>
+
+            <p class="reward-hint">Complete tasks to earn rewards!</p>
+
+            <!-- <button class="customize-rewards">✏ Customize Hobbies</button> -->
           </div>
 
           <!-- To-do -->
@@ -153,29 +166,7 @@
             <p class="error-text">Todo cannot be empty</p>
 
             <ul class="todo-list">
-              <!-- <li class="done">
-      <label>
-        <input type="checkbox" checked />
-        <span>Resume Update</span>
-      </label>
-      <button class="delete">✕</button>
-    </li> -->
-
-              <!-- <li class="active">
-      <label>
-        <input type="checkbox" />
-        <span>React Practice</span>
-      </label>
-      <button class="delete">✕</button>
-    </li> -->
-
-              <!-- <li>
-      <label>
-        <input type="checkbox" />
-        <span>Assignment Submission</span>
-      </label>
-      <button class="delete">✕</button>
-    </li> -->
+  
             </ul>
             <p class="small">2 of 3 tasks remaining</p>
           </div>
